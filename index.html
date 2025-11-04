@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Carros TurboDrive</title>
+    <style>
+        /* ----- ESTILO GERAL ----- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #111;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        main {
+            padding: 40px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        /* ----- CARD DE CADA CARRO ----- */
+        .carro {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .carro:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .carro img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .info h2 {
+            margin: 10px 0 5px;
+            font-size: 1.4em;
+        }
+
+        .info p {
+            margin: 0;
+            color: #777;
+        }
+
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        button {
+            background-color: #e63946;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🚗 TurboDrive - Loja de Carros</h1>
+        <p>Os melhores carros esportivos e de luxo em um só lugar!</p>
+    </header>
+
+    <main>
+        <div class="carro">
+            <img src="ferrari.jpg" alt="Ferrari F8">
+            <div class="info">
+                <h2>Ferrari F8</h2>
+                <p>R$ 4.200.000</p>
+                <button onclick="comprar('Ferrari F8')">Comprar</button>
+            </div>
+        </div>
+
+        <div class="carro">
+            <img src="lambo.jpg" alt="Lamborghini Aventador">
+            <div class="info">
+                <h2>Lamborghini Aventador</h2>
+                <p>R$ 9.350.000</p>
+                <button onclick="comprar('Lamborghini Aventador')">Comprar</button>
+            </div>
+        </div>
+
+        <div class="carro">
+            <img src="bmw.jpg" alt="BMW i8">
+            <div class="info">
+                <h2>BMW i8</h2>
+                <p>R$ 750.000.000</p>
+                <button onclick="comprar('BMW i8')">Comprar</button>
+            </div>
+        </div>
+
+        <div class="carro">
+            <img src="audi.jpg" alt="Audi R8">
+            <div class="info">
+                <h2>Audi R8</h2>
+                <p>R$ 2.800.000</p>
+                <button onclick="comprar('Audi R8')">Comprar</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 TurboDrive - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        // ----- FUNÇÃO DE COMPRAR -----
+        function comprar(carro) {
+            alert(`Você selecionou o carro: ${carro}! 🚘\nUm vendedor entrará em contato em breve.`);
+        }
+    </script>
+
+</body>
+</html>
