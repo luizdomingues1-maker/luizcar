@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Carros TurboDrive</title>
+    <title>Loja de Carros TurboDrive - Carrinho</title>
     <style>
         /* ----- ESTILO GERAL ----- */
         body {
@@ -41,11 +41,10 @@
             overflow: hidden;
             width: 300px;
             transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
         }
 
         .carro:hover {
-            transform: scale(1.05);
+            transform: scale(1.03); /* Suavizei o hover para não atrapalhar o clique */
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
 
@@ -68,6 +67,7 @@
         .info p {
             margin: 0;
             color: #777;
+            font-weight: bold;
         }
 
         footer {
@@ -78,6 +78,7 @@
             margin-top: 40px;
         }
 
+        /* ESTILO PARA OS BOTÕES */
         button {
             background-color: #e63946;
             border: none;
@@ -87,10 +88,77 @@
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: bold;
         }
 
         button:hover {
             background-color: #b71c1c;
+        }
+
+        /* ESTILO DO CARRINHO */
+        #carrinho-container {
+            width: 80%;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #carrinho-container h2 {
+            border-bottom: 2px solid #e63946;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #itens-carrinho {
+            list-style: none;
+            padding: 0;
+        }
+
+        #itens-carrinho li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #itens-carrinho li:last-child {
+            border-bottom: none;
+        }
+
+        #total {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            color: #111;
+        }
+
+        #finalizar-compra {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4caf50; /* Cor verde para finalização */
+        }
+
+        #finalizar-compra:hover {
+            background-color: #388e3c;
+        }
+
+        /* Botão Remover */
+        .remover-btn {
+            background-color: #ccc;
+            color: #333;
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+
+        .remover-btn:hover {
+            background-color: #999;
         }
     </style>
 </head>
@@ -102,51 +170,138 @@
     </header>
 
     <main>
-        <div class="carro">
+        <div class="carro" data-nome="Ferrari F8" data-preco="4200000">
             <img src="ferrari.jpg" alt="Ferrari F8">
             <div class="info">
                 <h2>Ferrari F8</h2>
                 <p>R$ 4.200.000</p>
-                <button onclick="comprar('Ferrari F8')">Comprar</button>
+                <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
 
-        <div class="carro">
+        <div class="carro" data-nome="Lamborghini Aventador" data-preco="9350000">
             <img src="lambo.jpg" alt="Lamborghini Aventador">
             <div class="info">
                 <h2>Lamborghini Aventador</h2>
                 <p>R$ 9.350.000</p>
-                <button onclick="comprar('Lamborghini Aventador')">Comprar</button>
+                <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
 
-        <div class="carro">
+        <div class="carro" data-nome="BMW i8" data-preco="750000">
             <img src="bmw.jpg" alt="BMW i8">
             <div class="info">
                 <h2>BMW i8</h2>
-                <p>R$ 750.000.000</p>
-                <button onclick="comprar('BMW i8')">Comprar</button>
+                <p>R$ 750.000</p>
+                <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
 
-        <div class="carro">
+        <div class="carro" data-nome="Audi R8" data-preco="2800000">
             <img src="audi.jpg" alt="Audi R8">
             <div class="info">
                 <h2>Audi R8</h2>
                 <p>R$ 2.800.000</p>
-                <button onclick="comprar('Audi R8')">Comprar</button>
+                <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
     </main>
+
+    <div id="carrinho-container">
+        <h2>🛒 Seu Carrinho de Compras</h2>
+        <ul id="itens-carrinho">
+            <li id="carrinho-vazio" style="text-align: center;">O carrinho está vazio.</li>
+        </ul>
+
+        <div id="total">
+            Total: R$ 0,00
+        </div>
+
+        <button id="finalizar-compra" onclick="finalizarCompra()" disabled>Finalizar Compra</button>
+    </div>
 
     <footer>
         <p>© 2025 TurboDrive - Todos os direitos reservados</p>
     </footer>
 
     <script>
-        // ----- FUNÇÃO DE COMPRAR -----
-        function comprar(carro) {
-            alert(`Você selecionou o carro: ${carro}! 🚘\nUm vendedor entrará em contato em breve.`);
+        // Array para armazenar os itens do carrinho
+        let carrinho = [];
+
+        // Função para formatar o número para o formato de moeda R$
+        function formatarMoeda(valor) {
+            return `R$ ${valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        }
+
+        // 1. Função que adiciona o carro ao carrinho
+        function adicionarAoCarrinho(botao) {
+            const carroDiv = botao.closest('.carro');
+            const nome = carroDiv.getAttribute('data-nome');
+            // O preço é armazenado como número para facilitar o cálculo
+            const preco = parseFloat(carroDiv.getAttribute('data-preco'));
+
+            carrinho.push({ nome, preco });
+            alert(`${nome} adicionado ao carrinho!`);
+            atualizarCarrinhoVisual();
+        }
+
+        // 2. Função que atualiza a lista de itens e o total no HTML
+        function atualizarCarrinhoVisual() {
+            const itensCarrinhoUL = document.getElementById('itens-carrinho');
+            const totalDiv = document.getElementById('total');
+            const botaoFinalizar = document.getElementById('finalizar-compra');
+            let total = 0;
+
+            // Limpa a lista existente
+            itensCarrinhoUL.innerHTML = '';
+
+            if (carrinho.length === 0) {
+                itensCarrinhoUL.innerHTML = '<li id="carrinho-vazio" style="text-align: center;">O carrinho está vazio.</li>';
+                totalDiv.textContent = 'Total: R$ 0,00';
+                botaoFinalizar.disabled = true;
+                return;
+            }
+
+            // Adiciona cada item do carrinho à lista
+            carrinho.forEach((item, index) => {
+                total += item.preco;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.nome}</span>
+                    <span>${formatarMoeda(item.preco)}</span>
+                `;
+                itensCarrinhoUL.appendChild(li);
+            });
+
+            // Atualiza o total
+            totalDiv.textContent = `Total: ${formatarMoeda(total)}`;
+            botaoFinalizar.disabled = false;
+        }
+
+        // 3. Função que simula a conclusão da compra
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione um carro para finalizar a compra.");
+                return;
+            }
+
+            const total = carrinho.reduce((sum, item) => sum + item.preco, 0);
+
+            // Simulação de processamento de compra
+            document.getElementById('finalizar-compra').textContent = 'Processando...';
+            document.getElementById('finalizar-compra').disabled = true;
+
+            setTimeout(() => {
+                // Mensagem de sucesso
+                alert(`✅ Compra de ${carrinho.length} veículo(s) no valor total de ${formatarMoeda(total)} CONCLUÍDA com sucesso!\nUm de nossos consultores entrará em contato para os detalhes de pagamento.`);
+
+                // Limpa o carrinho após a finalização
+                carrinho = [];
+                atualizarCarrinhoVisual();
+
+                // Restaura o botão
+                document.getElementById('finalizar-compra').textContent = 'Finalizar Compra';
+            }, 2000); // Simula um atraso de 2 segundos para o processamento
         }
     </script>
 
