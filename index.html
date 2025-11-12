@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Carros TurboDrive - Carrinho</title>
+    <title>Loja de Carros TurboDrive - Página 2</title>
     <style>
-        /* ----- ESTILO GERAL ----- */
+        /* ----- ESTILO GERAL (Mantenha o CSS idêntico ao original) ----- */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -44,7 +44,7 @@
         }
 
         .carro:hover {
-            transform: scale(1.03); /* Suavizei o hover para não atrapalhar o clique */
+            transform: scale(1.03);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
 
@@ -142,66 +142,60 @@
             display: block;
             width: 100%;
             padding: 15px;
-            background-color: #4caf50; /* Cor verde para finalização */
+            background-color: #4caf50;
         }
 
         #finalizar-compra:hover {
             background-color: #388e3c;
-        }
-
-        /* Botão Remover */
-        .remover-btn {
-            background-color: #ccc;
-            color: #333;
-            padding: 5px 10px;
-            font-size: 0.8em;
-        }
-
-        .remover-btn:hover {
-            background-color: #999;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🚗 TurboDrive - Loja de Carros</h1>
-        <p>Os melhores carros esportivos e de luxo em um só lugar!</p>
+        <h1>🚗 TurboDrive - Carros (Página 2)</h1>
+        <p>Mais opções para você!</p>
+        
+        <nav style="margin-top: 15px;">
+            <a href="index.html" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold; background-color: #e63946; padding: 5px 10px; border-radius: 5px;">&larr; Voltar para Pág. 1</a>
+            <span style="color: #555;">|</span>
+            <a href="carros-pagina-2.html" style="color: white; margin: 0 10px; text-decoration: none; font-weight: bold;">Página 2</a>
+        </nav>
     </header>
 
     <main>
-        <div class="carro" data-nome="Ferrari F8" data-preco="4200000">
-            <img src="ferrari.jpg" alt="Ferrari F8">
+        <div class="carro" data-nome="Porsche 911 Turbo S" data-preco="1850000">
+            <img src="porsche-911.jpg" alt="Porsche 911 Turbo S">
             <div class="info">
-                <h2>Ferrari F8</h2>
-                <p>R$ 4.200.000</p>
+                <h2>Porsche 911 Turbo S</h2>
+                <p>R$ 1.850.000</p>
                 <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
 
-        <div class="carro" data-nome="Lamborghini Aventador" data-preco="9350000">
-            <img src="lambo.jpg" alt="Lamborghini Aventador">
+        <div class="carro" data-nome="Mercedes AMG GT R" data-preco="1200000">
+            <img src="mercedes-amg.jpg" alt="Mercedes AMG GT R">
             <div class="info">
-                <h2>Lamborghini Aventador</h2>
-                <p>R$ 9.350.000</p>
+                <h2>Mercedes AMG GT R</h2>
+                <p>R$ 1.200.000</p>
                 <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
 
-        <div class="carro" data-nome="BMW i8" data-preco="750000">
-            <img src="bmw.jpg" alt="BMW i8">
+        <div class="carro" data-nome="McLaren 720S" data-preco="3500000">
+            <img src="mclaren.jpg" alt="McLaren 720S">
             <div class="info">
-                <h2>BMW i8</h2>
-                <p>R$ 750.000</p>
+                <h2>McLaren 720S</h2>
+                <p>R$ 3.500.000</p>
                 <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
-
-        <div class="carro" data-nome="Audi R8" data-preco="2800000">
-            <img src="audi.jpg" alt="Audi R8">
+        
+        <div class="carro" data-nome="Chevrolet Corvette Z06" data-preco="880000">
+            <img src="corvette.jpg" alt="Chevrolet Corvette Z06">
             <div class="info">
-                <h2>Audi R8</h2>
-                <p>R$ 2.800.000</p>
+                <h2>Chevrolet Corvette Z06</h2>
+                <p>R$ 880.000</p>
                 <button onclick="adicionarAoCarrinho(this)">Adicionar ao Carrinho</button>
             </div>
         </div>
@@ -304,6 +298,5 @@
             }, 2000); // Simula um atraso de 2 segundos para o processamento
         }
     </script>
-
 </body>
 </html>
